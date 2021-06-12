@@ -18,9 +18,33 @@
  */
 
 #include <stdint.h>
+#include "stm32f4xx.h"
+
+#define BUTTON_PIN		1
+#define LED_PIN			12	// Green LED on STM32F407G-DISC1 (PD12)
+
+volatile uint8_t led_on;
 
 int main(void)
 {
-    /* Loop forever */
-	for(;;);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
