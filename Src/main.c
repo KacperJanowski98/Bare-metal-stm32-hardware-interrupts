@@ -22,12 +22,36 @@
 
 #define BUTTON_PIN		1
 #define LED_PIN			12	// Green LED on STM32F407G-DISC1 (PD12)
+#define ROTARY_PIN		0
 
 volatile uint8_t led_on;
 
 int main(void)
 {
+	// Enable the GPIOB peripheral
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+	// Enable the GPIOD peripheral
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
+	// Enable the SYSCFG peripheral
+	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
+	// Initialize the GPIO pins.
+	// PB1 -> input mode with pull_up
+	GPIOB->MODER &= ~(0x3 << (BUTTON_PIN*2));	// input mode
+	GPIOB->PUPDR &= ~(0x3 << (BUTTON_PIN*2));
+	GPIOB->PUPDR |= (0x1 << (BUTTON_PIN*2));	// Pull-up
+	GPIOB->MODER &= ~(0x3 << (ROTARY_PIN*2));	// input mode
+	GPIOB->PUPDR &= ~(0x3 << (ROTARY_PIN*2));
+	GPIOB->PUPDR |= (0x1 << (ROTARY_PIN*2));	// Pull-up
+	// PD12 is connected to LED
+	// Set to push-pull low-speed output
+	GPIOD->MODER &= ~(0x3 << (LED_PIN*2));		// Clear bits
+	GPIOD->MODER |= (0x1 << (LED_PIN*2));		// output mode
+	GPIOD->OTYPER &= ~(0x1 << LED_PIN);			// push-pull
+	GPIOD->PUPDR &= ~(0x3 << (LED_PIN*2));		// no pull-up, pull-down
 
+	while (1) {
+
+	}
 }
 
 
