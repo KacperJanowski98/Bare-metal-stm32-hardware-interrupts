@@ -18,13 +18,7 @@
  */
 
 #include <stdint.h>
-#include "stm32f4xx.h"
-
-#define BUTTON_PIN		1
-#define LED_PIN			12	// Green LED on STM32F407G-DISC1 (PD12)
-#define ROTARY_PIN		0
-
-volatile uint8_t led_on;
+#include "man.h"
 
 int main(void)
 {
@@ -59,8 +53,16 @@ int main(void)
 	EXTI->RTSR &= ~(1 << BUTTON_PIN);
 	// Enable the 'falling edge' trigger (button press)
 	EXTI->FTSR |= (1 << BUTTON_PIN);
+	// Enable the NVIC interrupt at  minimum priority
+	NVIC_SetPriority(EXTI0_IRQn, 0x03);
+	NVIC_EnableIRQ(EXTI0_IRQn);
 
 	while (1) {
+		if(led_on) {
+			GPIOD->ODR |= (1 << LED_PIN);
+		} else {
+			GPIOD->ODR &= ~(1 << LED_PIN);
+		}
 
 	}
 }

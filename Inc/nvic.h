@@ -8,6 +8,8 @@
 #ifndef NVIC_H_
 #define NVIC_H_
 
+#include "man.h"
+
 void EXTI0_1_IRQ_handler(void);
 
 #endif /* NVIC_H_ */

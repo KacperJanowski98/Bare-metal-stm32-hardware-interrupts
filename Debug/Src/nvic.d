@@ -1,4 +1,4 @@
-Src/main.o: ../Src/main.c ../Inc/man.h \
+Src/nvic.o: ../Src/nvic.c ../Inc/nvic.h ../Inc/man.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -7,6 +7,8 @@ Src/main.o: ../Src/main.c ../Inc/man.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
  ../Drivers/CMSIS/Include/mpu_armv7.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
+
+../Inc/nvic.h:
 
 ../Inc/man.h:
 
