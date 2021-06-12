@@ -49,6 +49,17 @@ int main(void)
 	GPIOD->OTYPER &= ~(0x1 << LED_PIN);			// push-pull
 	GPIOD->PUPDR &= ~(0x3 << (LED_PIN*2));		// no pull-up, pull-down
 
+	// Set SYSCFG to connect the button EXIT line to GPIOB
+	SYSCFG->EXTICR[BUTTON_PIN/4] &= ~(0xF << (BUTTON_PIN % 4) * 4);		// Clear
+	SYSCFG->EXTICR[BUTTON_PIN/4] |= (0x1 << (BUTTON_PIN % 4) * 4);		// Set
+
+	// Setup EXTI interrupts for falling input on the button pin
+	EXTI->IMR |= (1 << BUTTON_PIN);
+	// Disable the 'rising edge' trigger (button release)
+	EXTI->RTSR &= ~(1 << BUTTON_PIN);
+	// Enable the 'falling edge' trigger (button press)
+	EXTI->FTSR |= (1 << BUTTON_PIN);
+
 	while (1) {
 
 	}
